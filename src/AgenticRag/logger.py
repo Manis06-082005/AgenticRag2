@@ -13,4 +13,4 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-logger=logging.getLogger(__file__)
+Logger=logging.getLogger(__file__)
