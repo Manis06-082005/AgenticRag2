@@ -1,0 +1,22 @@
+Agentic RAG Project Guide
+What is RAG?
+Retrieval-Augmented Generation (RAG) combines document retrieval with language
+generation. It retrieves relevant source material to help answer a question.
+Data Ingestion
+The ingestion component loads PDF, TXT, Markdown, CSV, and DOCX files.
+Each loaded document contains text and metadata identifying its source.
+Plain text files in this project should use UTF-8 encoding.
+Document Processing
+After ingestion, documents are divided into smaller chunks. These chunks are
+converted into embeddings and stored in a vector database for retrieval.
+Example Project Policy
+The project owner is Priya Sharma.
+Source documents are stored in the data directory.
+The sample project's document refresh runs every Monday at 9:00 AM.
+If an answer cannot be found in the retrieved documents, the assistant should
+state that the available documents do not contain the answer.
+Sample Questions
+Which file types does the ingestion component support?
+Who owns the sample project?
+When does the document refresh run?
+Where are source documents stored?
