@@ -1,4 +1,4 @@
-﻿"""Rebuild hybrid search from all current documents.
+"""Rebuild hybrid search from all current documents.
 
 A corpus version pairs one Pinecone namespace with one fitted BM25 file.
 The active_corpus.json file tells retrieval which pair to use.
@@ -22,12 +22,14 @@ BATCH_SIZE = 64
 UPLOAD_WAIT_SECONDS = 120
 
 
-def ingest_chunks(chunks, config_path="config/config.yaml"):
+def ingest_chunks(chunks, config_path="config/config.yaml", *, fingerprint=None):
     """Pass ALL current chunks, including chunks from previously uploaded files."""
     config = read_yaml(config_path)
 
     # 1. Reserve a new namespace and BM25 filename for this rebuild.
     version = create_corpus_version(config, len(chunks))
+    if fingerprint is not None:
+        version["fingerprint"] = fingerprint
 
     # 2. Fit BM25 on the complete collection of chunks.
     if chunks:
@@ -136,22 +138,33 @@ def activate_corpus(version, manifest_path):
 
 
 def run_ingestion(config_path="config/config.yaml"):
-    """Call after saving, replacing, or removing files in data/raw."""
+    """Rebuild only when files or ingestion settings have changed."""
     config = read_yaml(config_path)
     raw_dir = Path(config["data"]["raw_dir"])
-
     if not raw_dir.is_dir():
         raise FileNotFoundError(f"Raw document directory not found: {raw_dir}")
 
-    supported_files = [
+    files = sorted(
         path for path in raw_dir.rglob("*")
         if path.is_file() and path.suffix.lower() in DataIngestion.loaders
-    ]
+    )
+    # Include settings so changing the chunk size or model also triggers ingestion.
+    settings = {key: config[key] for key in ("chunking", "embedding", "vectorstore")}
+    digest = hashlib.sha256(json.dumps(settings, sort_keys=True).encode())
+    for path in files:
+        file_hash = hashlib.sha256(path.read_bytes()).hexdigest()
+        digest.update(json.dumps([path.relative_to(raw_dir).as_posix(), file_hash]).encode())
+    fingerprint = digest.hexdigest()
 
-    # Removing the last file publishes an empty corpus instead of keeping old results.
-    if not supported_files:
-        return ingest_chunks([], config_path)
+    manifest = Path(config["retriever"]["manifest_path"])
+    if manifest.is_file():
+        active = json.loads(manifest.read_text(encoding="utf-8"))
+        if active.get("fingerprint") == fingerprint:
+            print("Documents unchanged. Skipping upload.", flush=True)
+            return
 
-    documents = DataIngestion(raw_dir).load_documents()
-    chunks = DataTransformation(config_path).transform_documents(documents)
-    return ingest_chunks(chunks, config_path)
+    documents = DataIngestion(raw_dir).load_documents() if files else []
+    chunks = DataTransformation(config_path).transform_documents(documents) if documents else []
+    ingest_chunks(chunks, config_path, fingerprint=fingerprint)
+    print("Active corpus updated.", flush=True)
+

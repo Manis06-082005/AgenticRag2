@@ -1,6 +1,6 @@
-﻿import os
+import os
 from pathlib import Path
-from typing import Sequence
+from typing import Iterator, Sequence
 
 from dotenv import load_dotenv
 from langchain_core.documents import Document
@@ -25,10 +25,16 @@ class Generator:
         )
 
     def generate(self, question: str, documents: Sequence[Document]) -> str:
+        """Return a complete answer for callers that do not need streaming."""
+        return "".join(self.stream(question, documents)).strip()
+
+    def stream(self, question: str, documents: Sequence[Document]) -> Iterator[str]:
+        """Yield answer text as the model produces it."""
         if not question.strip():
             raise ValueError("Question cannot be empty.")
         if not documents:
-            return "I couldn't find relevant information in your documents."
+            yield "I couldn't find relevant information in your documents."
+            return
 
         context = "\n\n".join(
             f"[{number}]\n"
@@ -51,7 +57,8 @@ class Generator:
                 content=f"Question:\n{question}\n\nDocument context:\n{context}"
             ),
         ]
-        response = self.llm.invoke(messages)
-        if not isinstance(response.content, str):
-            raise TypeError("Expected a text response from the model.")
-        return response.content.strip()
+        for chunk in self.llm.stream(messages):
+            if not isinstance(chunk.content, str):
+                raise TypeError("Expected a text response from the model.")
+            if chunk.content:
+                yield chunk.content
