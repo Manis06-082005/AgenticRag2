@@ -1,69 +1,50 @@
-﻿import hashlib
-import textwrap
-from pathlib import Path
+﻿"""Ingest documents, retrieve context, and generate an answer."""
+
 import time
 
-from src.AgenticRag.components.data_ingestion import DataIngestion
-from src.AgenticRag.components.data_transformation import DataTransformation
-from src.AgenticRag.pipelines.ingestion_pipeline import ingest_chunks
-from src.AgenticRag.utils import read_yaml
+from src.AgenticRag.components.generator import Generator
+from src.AgenticRag.components.reranker import Reranker
+from src.AgenticRag.pipelines.ingestion_pipeline import run_ingestion
+
+
+CONFIG_PATH = "config/config.yaml"
+QUESTION = "What is RAG?"
 
 
 def main():
-    config_path = "config/config.yaml"
-    config = read_yaml(config_path)
-    question = "What is RAG?"
+    print(f"\nQuestion: {QUESTION}")
 
-    print("\nAGENTIC RAG - DOCUMENT RETRIEVAL")
-    print("=" * 70)
+    # Load and split all documents, then upload a new searchable corpus.
+    print("\n[1/4] Ingesting documents...", flush=True)
+    retriever = run_ingestion(CONFIG_PATH)
 
-    print("\n[1/4] Loading documents...", flush=True)
-    raw_dir = Path(config["data"]["raw_dir"])
-    if not raw_dir.is_dir():
-        raise FileNotFoundError(f"Raw document directory not found: {raw_dir}")
-    has_files = any(
-        path.is_file() and path.suffix.lower() in DataIngestion.loaders
-        for path in raw_dir.rglob("*")
-    )
-    documents = DataIngestion(raw_dir).load_documents() if has_files else []
-    print(f"Loaded {len(documents)} document(s).")
-    for source in sorted({str(doc.metadata.get("source", "Unknown")) for doc in documents}):
-        print(f"  Source: {source}")
-
-    print("\n[2/4] Splitting documents...", flush=True)
-    chunks = DataTransformation(config_path).transform_documents(documents) if documents else []
-    print(f"Created {len(chunks)} chunk(s).")
-
-    print("\n[3/4] Connecting to Pinecone and uploading chunks...", flush=True)
-    retriever = ingest_chunks(chunks, config_path)
-    print(f"Uploaded {len(chunks)} chunk(s) to '{config['vectorstore']['index_name']}'.")
-
-    print("\n[4/4] Retrieving relevant chunks...", flush=True)
-    print(f"Question: {question}")
-
-    # Newly uploaded vectors may take a short time to become searchable.
-    results = []
+    # Allow newly uploaded Pinecone vectors a short time to become searchable.
+    print("[2/4] Retrieving relevant chunks...", flush=True)
+    documents = []
     for attempt in range(6):
-        results = retriever.retrieve(question)
-        if results or not chunks:
+        documents = retriever.retrieve(QUESTION)
+        if documents or retriever.empty:
             break
         if attempt < 5:
-            print("  Waiting for uploaded vectors to become searchable...", flush=True)
             time.sleep(2)
 
-    print(f"\nRetrieved {len(results)} chunk(s).")
-    for number, document in enumerate(results, start=1):
-        print("\n" + "-" * 70)
-        print(f"RESULT {number}")
-        print(f"Source: {document.metadata.get('source', 'Unknown')}")
-        print("Text:")
-        print(textwrap.fill(document.page_content, width=90))
+    print(f"Found {len(documents)} relevant chunk(s).")
+    if not documents:
+        print("\nNo relevant information found in your documents.")
+        return
 
-    if not results:
-        print("No matching chunks. If no source files remain, the active corpus is empty.")
+    print("[3/4] Reranking retrieved chunks...", flush=True)
+    documents = Reranker(CONFIG_PATH).rerank(QUESTION, documents)
 
-    print("\n" + "=" * 70)
-    print("Retrieval finished.")
+    # Give the retrieved context to the LLM to answer the question.
+    print("[4/4] Generating an answer...", flush=True)
+    generator = Generator(CONFIG_PATH)
+    answer = generator.generate(QUESTION, documents)
+    print(f"\nAnswer:\n{answer}")
+
+    print("\nSources:")
+    for number, document in enumerate(documents, start=1):
+        print(f"[{number}] {document.metadata.get('source', 'Unknown')}")
 
 
 if __name__ == "__main__":
