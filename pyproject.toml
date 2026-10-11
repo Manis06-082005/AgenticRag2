@@ -17,7 +17,11 @@ dependencies = [
     "langchain-text-splitters==1.1.2",
     "langgraph==1.2.11",
     "pinecone==7.3.0",
+    "pinecone-text",
     "pydantic>=2.13.5",
     "python-dotenv==1.2.3",
     "sentence-transformers==6.0.0",
 ]
+
+[tool.uv]
+override-dependencies = ["mmh3>=5.2,<6"]

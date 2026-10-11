@@ -1,38 +1,46 @@
 project:
-name: AgenticRag
-version: "1.0.0"
+  name: AgenticRag
+  version: "1.0.0"
 
 data:
-raw_dir: data/raw
-processed_dir: data/processed
+  raw_dir: data/raw
+  processed_dir: data/processed
 
 chunking:
-chunk_size: 500
-chunk_overlap: 50
+  chunk_size: 500
+  chunk_overlap: 50
 
 embedding:
-model_name: sentence-transformers/all-MiniLM-L6-v2
-dimension: 384
+  model_name: sentence-transformers/all-MiniLM-L6-v2
+  dimension: 384
 
 vectorstore:
-type: chroma
-persist_directory: vectorstore
-collection_name: agentic_rag
+  type: pinecone
+  index_name: "agentic-rag-hybrid"
+  namespace: ""
+  metric: dotproduct
+  cloud: aws
+  region: us-east-1
 
 retriever:
-search_type: similarity
-top_k: 5
+  search_type: hybrid
+  top_k: 5
+  alpha: 0.5
+  bm25_path: "data/processed/bm25_encoder.json"
+  manifest_path: "data/processed/active_corpus.json"
 
 reranker:
-enabled: true
-top_k: 3
+  enabled: true
+  model_name: "cross-encoder/ms-marco-MiniLM-L-6-v2"
+  top_k: 3
 
 agent:
-max_retries: 2
+  max_retries: 2
 
-llm:
-temperature: 0.0
-max_tokens: 512
+generator:
+  model: "openai/gpt-oss-20b"
+  temperature: 0
+  max_tokens: 512
 
 evaluation:
-enabled: true
+  enabled: true

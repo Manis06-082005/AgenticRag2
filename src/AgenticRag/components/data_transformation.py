@@ -10,8 +10,8 @@ class DataTransformation:
         with Path(config_path).open("r",encoding="utf-8") as file:
             config=yaml.safe_load(file)
         settings=config['chunking']
-        chunk_size=config['chunk_size']
-        chunk_overlap=config['chunk_overlap']
+        chunk_size=settings['chunk_size']
+        chunk_overlap=settings['chunk_overlap']
         if not isinstance(chunk_size,int) or chunk_size<=0:
             raise ValueError(" chunk_size must be a positive  integer.")
         if (
