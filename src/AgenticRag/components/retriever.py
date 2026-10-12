@@ -1,4 +1,4 @@
-﻿"""Find relevant chunks using semantic embeddings and BM25 keyword vectors."""
+"""Find relevant chunks using semantic embeddings and BM25 keyword vectors."""
 
 import json
 import os
@@ -12,6 +12,7 @@ from pinecone import Pinecone, ServerlessSpec
 
 from ..Exception import CustomException
 from ..utils import read_yaml
+from ..logger import Logger
 
 
 class Retriever:
@@ -43,6 +44,7 @@ class Retriever:
         self.empty = snapshot["chunk_count"] == 0
         self.text_key = store_settings.get("text_key", "text")
         if self.empty:
+            Logger.info("Retriever initialized with an empty corpus")
             return
 
         self.sparse_encoder = self.load_bm25(snapshot["bm25_path"])
@@ -51,6 +53,8 @@ class Retriever:
             model_name=embedding_settings["model_name"],
             encode_kwargs={"normalize_embeddings": True},
         )
+
+        Logger.info("Retriever initialized for namespace %s", self.namespace)
 
     @staticmethod
     def load_active_corpus(manifest_path):
@@ -93,6 +97,7 @@ class Retriever:
             if description.metric != "dotproduct":
                 raise ValueError("Existing index must use dotproduct for hybrid retrieval.")
             if description.status["ready"]:
+                Logger.info("Pinecone index %s is ready", index_name)
                 return client.Index(host=description.host)
             if time.monotonic() >= deadline:
                 raise TimeoutError(f"Index '{index_name}' is not ready after 120 seconds.")
@@ -103,12 +108,16 @@ class Retriever:
             if not question.strip():
                 raise ValueError("Question cannot be empty.")
             if self.empty:
+                Logger.info("Retrieval skipped: active corpus is empty")
                 return []
 
             query = self.build_hybrid_query(question)
             response = self.index.query(**query)
-            return self.convert_matches_to_documents(response.matches)
+            documents = self.convert_matches_to_documents(response.matches)
+            Logger.info("Retrieval returned %d chunks", len(documents))
+            return documents
         except Exception as exc:
+            Logger.exception("Retrieval failed")
             raise CustomException(exc) from exc
 
     def build_hybrid_query(self, question):

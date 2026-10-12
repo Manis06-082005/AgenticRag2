@@ -17,6 +17,7 @@ from ..components.data_ingestion import DataIngestion
 from ..components.data_transformation import DataTransformation
 from ..components.retriever import Retriever
 from ..utils import read_yaml
+from ..logger import Logger
 
 BATCH_SIZE = 64
 UPLOAD_WAIT_SECONDS = 120
@@ -73,6 +74,7 @@ def fit_and_save_bm25(chunks, encoder_path):
     encoder_path = Path(encoder_path)
     encoder_path.parent.mkdir(parents=True, exist_ok=True)
     encoder.dump(str(encoder_path))
+    Logger.info("BM25 fitted on %d chunks and saved", len(chunks))
     return encoder
 
 
@@ -102,6 +104,7 @@ def upload_chunks(chunks, encoder, retriever):
             })
 
         retriever.index.upsert(vectors=vectors, namespace=retriever.namespace)
+        Logger.info("Uploaded batch of %d vectors to %s", len(vectors), retriever.namespace)
 
 
 def wait_for_upload(retriever, expected_count):
@@ -114,6 +117,7 @@ def wait_for_upload(retriever, expected_count):
 
         if namespace_stats is not None:
             if namespace_stats.vector_count == expected_count:
+                Logger.info("Confirmed %d uploaded vectors", expected_count)
                 return
 
         if time.monotonic() >= deadline:
@@ -133,6 +137,7 @@ def activate_corpus(version, manifest_path):
     try:
         temporary_path.write_text(json.dumps(version, indent=2), encoding="utf-8")
         os.replace(temporary_path, manifest_path)
+        Logger.info("Activated corpus namespace %s", version["namespace"])
     finally:
         temporary_path.unlink(missing_ok=True)
 
@@ -155,14 +160,17 @@ def run_ingestion(config_path="config/config.yaml"):
         file_hash = hashlib.sha256(path.read_bytes()).hexdigest()
         digest.update(json.dumps([path.relative_to(raw_dir).as_posix(), file_hash]).encode())
     fingerprint = digest.hexdigest()
+    Logger.info("Checked fingerprints for %d source files", len(files))
 
     manifest = Path(config["retriever"]["manifest_path"])
     if manifest.is_file():
         active = json.loads(manifest.read_text(encoding="utf-8"))
         if active.get("fingerprint") == fingerprint:
+            Logger.info("Documents unchanged; upload skipped")
             print("Documents unchanged. Skipping upload.", flush=True)
             return
 
+    Logger.info("Corpus changed or missing; rebuilding")
     documents = DataIngestion(raw_dir).load_documents() if files else []
     chunks = DataTransformation(config_path).transform_documents(documents) if documents else []
     ingest_chunks(chunks, config_path, fingerprint=fingerprint)

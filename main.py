@@ -2,6 +2,8 @@
 
 import argparse
 
+from src.AgenticRag.logger import Logger
+
 
 CONFIG_PATH = "config/config.yaml"
 QUESTION = "What is RAG?"
@@ -12,6 +14,7 @@ def main():
     parser.add_argument("--ingest", action="store_true", help="Rebuild the corpus from data/raw and exit.")
     parser.add_argument("--question", default=QUESTION, help="Question to answer using the active corpus.")
     args = parser.parse_args()
+    Logger.info("Application started in %s mode", "ingestion" if args.ingest else "question")
 
     if args.ingest:
         from src.AgenticRag.pipelines.ingestion_pipeline import run_ingestion
@@ -53,10 +56,15 @@ def main():
         print(text, end="", flush=True)
     print()
 
+    Logger.info("Question pipeline completed with %d source chunks", len(documents))
     print("\nSources:")
     for number, document in enumerate(documents, start=1):
         print(f"[{number}] {document.metadata.get('source', 'Unknown')}")
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception:
+        Logger.exception("Application failed")
+        raise

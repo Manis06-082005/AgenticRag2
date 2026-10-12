@@ -30,6 +30,9 @@ class DataTransformation:
                 raise ValueError(
                     "NO documents are provided for transformation"
                 )
-            return self.splitter.split_documents(documents)
+            chunks = self.splitter.split_documents(documents)
+            Logger.info("Split %d documents into %d chunks", len(documents), len(chunks))
+            return chunks
         except Exception as e:
+            Logger.exception("Document splitting failed")
             raise CustomException(e)

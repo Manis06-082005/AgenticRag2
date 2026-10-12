@@ -1,4 +1,4 @@
-﻿"""Rank retrieved chunks by how well they answer a question."""
+"""Rank retrieved chunks by how well they answer a question."""
 
 from pathlib import Path
 from typing import Sequence
@@ -6,6 +6,7 @@ from typing import Sequence
 from langchain_core.documents import Document
 
 from ..utils import read_yaml
+from ..logger import Logger
 
 
 class Reranker:
@@ -21,13 +22,16 @@ class Reranker:
             from sentence_transformers import CrossEncoder
 
             self.model = CrossEncoder(settings["model_name"])
+            Logger.info("Reranker model loaded: %s", settings["model_name"])
 
     def rerank(self, question: str, documents: Sequence[Document]) -> list[Document]:
         if not question.strip():
             raise ValueError("Question cannot be empty.")
         if not documents:
+            Logger.info("Reranking skipped: no documents")
             return []
         if not self.enabled:
+            Logger.info("Reranking disabled; passing through %d chunks", len(documents))
             return list(documents)
 
         pairs = [(question, document.page_content) for document in documents]
@@ -35,9 +39,11 @@ class Reranker:
         ranked = sorted(zip(documents, scores), key=lambda item: float(item[1]), reverse=True)
 
         # Copy each document so the original retrieval results remain available.
-        return [
+        results = [
             document.model_copy(
                 update={"metadata": {**document.metadata, "rerank_score": float(score)}}
             )
             for document, score in ranked[:self.top_k]
         ]
+        Logger.info("Reranked %d chunks; retained %d", len(documents), len(results))
+        return results

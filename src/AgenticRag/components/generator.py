@@ -8,6 +8,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_groq import ChatGroq
 
 from ..utils import read_yaml
+from ..logger import Logger
 
 
 class Generator:
@@ -24,6 +25,8 @@ class Generator:
             max_tokens=settings["max_tokens"],
         )
 
+        Logger.info("Generator initialized with model %s", settings["model"])
+
     def generate(self, question: str, documents: Sequence[Document]) -> str:
         """Return a complete answer for callers that do not need streaming."""
         return "".join(self.stream(question, documents)).strip()
@@ -33,6 +36,7 @@ class Generator:
         if not question.strip():
             raise ValueError("Question cannot be empty.")
         if not documents:
+            Logger.info("Generation skipped: no context documents")
             yield "I couldn't find relevant information in your documents."
             return
 
@@ -57,8 +61,15 @@ class Generator:
                 content=f"Question:\n{question}\n\nDocument context:\n{context}"
             ),
         ]
-        for chunk in self.llm.stream(messages):
-            if not isinstance(chunk.content, str):
-                raise TypeError("Expected a text response from the model.")
-            if chunk.content:
-                yield chunk.content
+        Logger.info("Starting answer stream with %d context chunks", len(documents))
+        try:
+            for chunk in self.llm.stream(messages):
+                if not isinstance(chunk.content, str):
+                    raise TypeError("Expected a text response from the model.")
+                if chunk.content:
+                    yield chunk.content
+        except Exception:
+            Logger.exception("Answer streaming failed")
+            raise
+        else:
+            Logger.info("Answer streaming completed")

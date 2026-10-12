@@ -55,7 +55,10 @@ class DataIngestion:
                 else:
                     loader=loader_class(str(file_path))
                 documents.extend(loader.load())
+                Logger.info("Loaded source file: %s", file_path)
+            Logger.info("Loaded %d documents from %d files", len(documents), len(files))
             return documents
         except Exception as e:
+            Logger.exception("Document loading failed")
             raise CustomException(e)
             
