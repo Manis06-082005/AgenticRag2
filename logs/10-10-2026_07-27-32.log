@@ -1,0 +1,73 @@
+[ 2026-10-10 07:27:42,954 ] INFO - No device provided, using cpu
+[ 2026-10-10 07:27:43,274 ] INFO - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+[ 2026-10-10 07:27:44,037 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[ 2026-10-10 07:27:44,040 ] WARNING - Retrying in 1s [Retry 1/5].
+[ 2026-10-10 07:27:45,195 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[ 2026-10-10 07:27:45,225 ] WARNING - Retrying in 2s [Retry 2/5].
+[ 2026-10-10 07:27:47,318 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[ 2026-10-10 07:27:47,318 ] WARNING - Retrying in 4s [Retry 3/5].
+[ 2026-10-10 07:27:51,478 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[ 2026-10-10 07:27:51,478 ] WARNING - Retrying in 8s [Retry 4/5].
+[ 2026-10-10 07:27:59,604 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[ 2026-10-10 07:27:59,604 ] WARNING - Retrying in 8s [Retry 5/5].
+[ 2026-10-10 07:28:07,798 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[ 2026-10-10 07:28:08,301 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/processor_config.json
+[ 2026-10-10 07:28:08,301 ] WARNING - Retrying in 1s [Retry 1/5].
+[ 2026-10-10 07:28:09,386 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/processor_config.json
+[ 2026-10-10 07:28:09,386 ] WARNING - Retrying in 2s [Retry 2/5].
+[ 2026-10-10 07:28:11,506 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/processor_config.json
+[ 2026-10-10 07:28:11,506 ] WARNING - Retrying in 4s [Retry 3/5].
+[ 2026-10-10 07:28:15,623 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/processor_config.json
+[ 2026-10-10 07:28:15,624 ] WARNING - Retrying in 8s [Retry 4/5].
+[ 2026-10-10 07:28:23,779 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/processor_config.json
+[ 2026-10-10 07:28:23,779 ] WARNING - Retrying in 8s [Retry 5/5].
+[ 2026-10-10 07:28:32,060 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/processor_config.json
+[ 2026-10-10 07:28:32,377 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json
+[ 2026-10-10 07:28:32,378 ] WARNING - Retrying in 1s [Retry 1/5].
+[ 2026-10-10 07:28:33,539 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json
+[ 2026-10-10 07:28:33,539 ] WARNING - Retrying in 2s [Retry 2/5].
+[ 2026-10-10 07:28:35,684 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json
+[ 2026-10-10 07:28:35,685 ] WARNING - Retrying in 4s [Retry 3/5].
+[ 2026-10-10 07:28:39,975 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json
+[ 2026-10-10 07:28:39,976 ] WARNING - Retrying in 8s [Retry 4/5].
+[ 2026-10-10 07:28:48,160 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json
+[ 2026-10-10 07:28:48,161 ] WARNING - Retrying in 8s [Retry 5/5].
+[ 2026-10-10 07:28:56,298 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json
+[ 2026-10-10 07:28:56,646 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/video_preprocessor_config.json
+[ 2026-10-10 07:28:56,647 ] WARNING - Retrying in 1s [Retry 1/5].
+[ 2026-10-10 07:28:57,818 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/video_preprocessor_config.json
+[ 2026-10-10 07:28:57,820 ] WARNING - Retrying in 2s [Retry 2/5].
+[ 2026-10-10 07:29:00,035 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/video_preprocessor_config.json
+[ 2026-10-10 07:29:00,036 ] WARNING - Retrying in 4s [Retry 3/5].
+[ 2026-10-10 07:29:04,130 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/video_preprocessor_config.json
+[ 2026-10-10 07:29:04,130 ] WARNING - Retrying in 8s [Retry 4/5].
+[ 2026-10-10 07:29:12,315 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/video_preprocessor_config.json
+[ 2026-10-10 07:29:12,317 ] WARNING - Retrying in 8s [Retry 5/5].
+[ 2026-10-10 07:29:20,425 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/video_preprocessor_config.json
+[ 2026-10-10 07:29:20,551 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json
+[ 2026-10-10 07:29:20,551 ] WARNING - Retrying in 1s [Retry 1/5].
+[ 2026-10-10 07:29:21,681 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json
+[ 2026-10-10 07:29:21,681 ] WARNING - Retrying in 2s [Retry 2/5].
+[ 2026-10-10 07:29:23,768 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json
+[ 2026-10-10 07:29:23,768 ] WARNING - Retrying in 4s [Retry 3/5].
+[ 2026-10-10 07:29:27,961 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json
+[ 2026-10-10 07:29:27,962 ] WARNING - Retrying in 8s [Retry 4/5].
+[ 2026-10-10 07:29:36,158 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json
+[ 2026-10-10 07:29:36,158 ] WARNING - Retrying in 8s [Retry 5/5].
+[ 2026-10-10 07:29:44,539 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/preprocessor_config.json
+[ 2026-10-10 07:29:45,545 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/2_Normalize/config.json
+[ 2026-10-10 07:29:45,545 ] WARNING - Retrying in 1s [Retry 1/5].
+[ 2026-10-10 07:29:46,718 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/2_Normalize/config.json
+[ 2026-10-10 07:29:46,719 ] WARNING - Retrying in 2s [Retry 2/5].
+[ 2026-10-10 07:29:48,914 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/2_Normalize/config.json
+[ 2026-10-10 07:29:48,914 ] WARNING - Retrying in 4s [Retry 3/5].
+[ 2026-10-10 07:29:53,067 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/2_Normalize/config.json
+[ 2026-10-10 07:29:53,067 ] WARNING - Retrying in 8s [Retry 4/5].
+[ 2026-10-10 07:30:01,229 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/2_Normalize/config.json
+[ 2026-10-10 07:30:01,229 ] WARNING - Retrying in 8s [Retry 5/5].
+[ 2026-10-10 07:30:09,325 ] WARNING - '[WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/2_Normalize/config.json
+[ 2026-10-10 07:30:09,561 ] WARNING - Retrying (JitterRetry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError("HTTPSConnection(host='api.pinecone.io', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions")': /indexes/agentic-rag
+[ 2026-10-10 07:30:10,213 ] WARNING - Retrying (JitterRetry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError("HTTPSConnection(host='api.pinecone.io', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions")': /indexes/agentic-rag
+[ 2026-10-10 07:30:11,300 ] WARNING - Retrying (JitterRetry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError("HTTPSConnection(host='api.pinecone.io', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions")': /indexes/agentic-rag
+[ 2026-10-10 07:30:13,541 ] WARNING - Retrying (JitterRetry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError("HTTPSConnection(host='api.pinecone.io', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions")': /indexes/agentic-rag
+[ 2026-10-10 07:30:17,719 ] WARNING - Retrying (JitterRetry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError("HTTPSConnection(host='api.pinecone.io', port=443): Failed to establish a new connection: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions")': /indexes/agentic-rag

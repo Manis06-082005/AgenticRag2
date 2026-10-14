@@ -1,0 +1,8 @@
+{
+  "namespace": "corpus-68f82cbbc0314dcbb01e2aa5011646f1",
+  "bm25_path": "data\\processed\\bm25_encoder-68f82cbbc0314dcbb01e2aa5011646f1.json",
+  "chunk_count": 3,
+  "index_name": "agentic-rag-hybrid",
+  "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+  "fingerprint": "57bdf7b1673192dd4f21985c58f052926d8871eea20b721a80e05b117c7f354e"
+}

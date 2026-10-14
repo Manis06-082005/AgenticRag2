@@ -1,0 +1,12 @@
+[ 2026-10-14 22:28:26,379 ] INFO - Activated corpus namespace docs-081c0f26b79d45e280bd1ac99ec27b16
+[ 2026-10-14 22:28:26,417 ] INFO - BM25 fitted on 1 chunks and saved
+[ 2026-10-14 22:28:26,458 ] INFO - BM25 fitted on 1 chunks and saved
+[ 2026-10-14 22:28:26,458 ] INFO - Uploaded batch of 1 vectors to docs-aef0ab6dcc0d4557b8b01c3eea245f62
+[ 2026-10-14 22:28:26,464 ] INFO - BM25 fitted on 1 chunks and saved
+[ 2026-10-14 22:28:26,467 ] INFO - Uploaded batch of 1 vectors to docs-9a9d5eb7b6034634bb72f5b2a0168e9f
+[ 2026-10-14 22:28:26,468 ] INFO - Confirmed 1 uploaded vectors
+[ 2026-10-14 22:28:26,471 ] INFO - Activated corpus namespace docs-9a9d5eb7b6034634bb72f5b2a0168e9f
+[ 2026-10-14 22:28:26,473 ] INFO - BM25 fitted on 1 chunks and saved
+[ 2026-10-14 22:28:26,473 ] INFO - Uploaded batch of 1 vectors to docs-b2dbe2be1d9e418b81622bbda2fe616c
+[ 2026-10-14 22:28:26,473 ] INFO - Confirmed 1 uploaded vectors
+[ 2026-10-14 22:28:26,478 ] INFO - Activated corpus namespace docs-b2dbe2be1d9e418b81622bbda2fe616c
