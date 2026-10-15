@@ -3,7 +3,11 @@ from pathlib import Path
 from langgraph.graph import END, START, StateGraph
 
 from .nodes import AgentNodes
-from .router import route_after_context_check, route_question
+from .router import (
+    route_after_context_check,
+    route_after_web_grade,
+    route_question,
+)
 from .state import AgentState
 from ..utils import read_yaml
 
@@ -22,6 +26,8 @@ def build_graph(config_path: str | Path = "config/config.yaml"):
     graph.add_node("rerank", nodes.rerank)
     graph.add_node("check_context", nodes.check_context)
     graph.add_node("rewrite_query", nodes.rewrite_query)
+    graph.add_node("search_web", nodes.search_web)
+    graph.add_node("grade_web_context", nodes.grade_web_context)
     graph.add_node("generate", nodes.generate)
     graph.add_node("insufficient_context", nodes.insufficient_context)
 
@@ -42,10 +48,19 @@ def build_graph(config_path: str | Path = "config/config.yaml"):
         {
             "generate": "generate",
             "rewrite_query": "rewrite_query",
-            "insufficient_context": "insufficient_context",
+            "search_web": "search_web",
         },
     )
     graph.add_edge("rewrite_query", "retrieve")
+    graph.add_edge("search_web", "grade_web_context")
+    graph.add_conditional_edges(
+        "grade_web_context",
+        route_after_web_grade,
+        {
+            "generate": "generate",
+            "insufficient_context": "insufficient_context",
+        },
+    )
     graph.add_edge("generate", END)
     graph.add_edge("insufficient_context", END)
 

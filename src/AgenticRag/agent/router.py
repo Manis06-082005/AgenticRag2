@@ -42,9 +42,17 @@ def route_question(
 def route_after_context_check(
     state: AgentState,
     max_retries: int,
-) -> Literal["generate", "rewrite_query", "insufficient_context"]:
+) -> Literal["generate", "rewrite_query", "search_web"]:
     if state.get("context_sufficient", False):
         return "generate"
     if state.get("retries", 0) < max_retries:
         return "rewrite_query"
+    return "search_web"
+
+
+def route_after_web_grade(
+    state: AgentState,
+) -> Literal["generate", "insufficient_context"]:
+    if state.get("web_context_sufficient", False):
+        return "generate"
     return "insufficient_context"

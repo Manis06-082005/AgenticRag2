@@ -10,3 +10,4 @@ class AgentState(TypedDict):
     answer: NotRequired[str]
     retries: NotRequired[int]
     context_sufficient: NotRequired[bool]
+    web_context_sufficient: NotRequired[bool]
