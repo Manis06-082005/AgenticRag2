@@ -2,11 +2,8 @@
 
 import argparse
 
+from app.config import CONFIG_PATH, QUESTION
 from src.AgenticRag.logger import Logger
-
-
-CONFIG_PATH = "config/config.yaml"
-QUESTION = "What is RAG?"
 
 
 def main():
